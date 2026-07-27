@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de contraseñas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Generador de contraseñas</h1>
+    </header>
+    <nav>
+        <div class="option-group">
+            <label for="simbol">Caracteres especiales</label>
+            <input type="checkbox" checked id="simbol">
+        </div>
+
+        <div class="option-group">
+            <label for="num">Números</label>
+            <input type="checkbox" checked id="num">
+        </div>
+
+        <div class="option-group">
+            <label for="mayus">Mayúsculas</label>
+            <input type="checkbox" checked id="mayus">
+        </div>
+
+        <div class="option-group">
+            <label for="minus">Minúsculas</label>
+            <input type="checkbox" checked id="minus">
+        </div>
+
+        <div class="slider-group">
+            <div class="slider-header">
+                <label for="slider">Longitud contraseña</label>
+                <output id="slider-val">12</output>
+            </div>
+            <input type="range" value="12" min="4" max="25" class="slider" id="slider" oninput="document.getElementById('slider-val').value = this.value">
+        </div>
+    </nav>
+    <main>
+        <button type="button" id="generate" class="action-btn">Generar contraseña</button>
+        <output>
+            <p>Click en el botón generar contraseña</p>
+            <button id="clipboard" class="clipboard">
+                <i class="fas fa-clipboard"></i>
+            </button>
+        </output>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>
