@@ -15,22 +15,51 @@ generateBtn.addEventListener("click", () => {
     const length = parseInt(slider.value);
 
     let allowedChars = "";
+    let mandatoryChars = [];
 
-    if (hasSimbol) allowedChars += simbol;
-    if (hasNumber) allowedChars += number;
-    if (hasMayus) allowedChars += mayus;
-    if (hasMinus) allowedChars += minus;
+    // 1. Guardamos al menos un carácter de cada tipo seleccionado
+    if (hasSimbol) {
+        allowedChars += simbol;
+        mandatoryChars.push(simbol[Math.floor(Math.random() * simbol.length)]);
+    }
+    if (hasNumber) {
+        allowedChars += number;
+        mandatoryChars.push(number[Math.floor(Math.random() * number.length)]);
+    }
+    if (hasMayus) {
+        allowedChars += mayus;
+        mandatoryChars.push(mayus[Math.floor(Math.random() * mayus.length)]);
+    }
+    if (hasMinus) {
+        allowedChars += minus;
+        mandatoryChars.push(minus[Math.floor(Math.random() * minus.length)]);
+    }
 
     if (allowedChars === "") {
         alert("Por favor, selecciona al menos un tipo de carácter.");
         return;
     }
 
-    let password = "";
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * allowedChars.length);
-        password += allowedChars[randomIndex];
+    // Si la longitud pedida es menor que los tipos obligatorios seleccionados
+    if (length < mandatoryChars.length) {
+        alert(`Debes seleccionar una longitud de al menos ${mandatoryChars.length} para incluir todos los tipos seleccionados.`);
+        return;
     }
+
+    // 2. Rellenamos el resto de la contraseña si la longitud es mayor
+    let passwordArray = [...mandatoryChars];
+    for (let i = mandatoryChars.length; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * allowedChars.length);
+        passwordArray.push(allowedChars[randomIndex]);
+    }
+
+    // 3. Mezclamos los caracteres para que el orden sea aleatorio (Algoritmo Fisher-Yates)
+    for (let i = passwordArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [passwordArray[i], passwordArray[j]] = [passwordArray[j], passwordArray[i]];
+    }
+
+    const password = passwordArray.join("");
 
     const outputText = document.querySelector("main output p");
     if (outputText) {
