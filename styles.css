@@ -50,6 +50,8 @@ body {
 header {
     margin-bottom: 24px;
     text-align: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header h1 {
@@ -57,6 +59,22 @@ header h1 {
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: -0.02em;
+}
+
+.lang-btn {
+    background-color: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.lang-btn:hover {
+    background-color: var(--primary);
+    color: #0f172a;
 }
 
 nav {

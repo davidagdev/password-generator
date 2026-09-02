@@ -1,11 +1,56 @@
 const generateBtn = document.getElementById("generate");
-const clipboardBtn = document.getElementById("clipboard");
 const slider = document.getElementById("slider");
+const langBtn = document.getElementById("lang-btn");
 
 const simbol = "@()[]{}*,;/-_¿?.¡!$<>#&+%";
 const number = "1234567890";
 const mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const minus = "abcdefghijklmnopqrstuvwxyz";
+
+let currentLang = "es";
+
+const translations = {
+    es: {
+        title: "Generador de contraseñas",
+        symbols: "Caracteres especiales",
+        numbers: "Números",
+        uppercase: "Mayúsculas",
+        lowercase: "Minúsculas",
+        length: "Longitud contraseña",
+        generate: "Generar contraseña",
+        placeholder: "Click en el botón generar contraseña",
+        alertEmpty: "Por favor, selecciona al menos un tipo de carácter.",
+        alertMinLength: "Debes seleccionar una longitud de al menos {min} para incluir todos los tipos seleccionados."
+    },
+    en: {
+        title: "Password Generator",
+        symbols: "Special characters",
+        numbers: "Numbers",
+        uppercase: "Uppercase",
+        lowercase: "Lowercase",
+        length: "Password length",
+        generate: "Generate password",
+        placeholder: "Click the generate password button",
+        alertEmpty: "Please select at least one character type.",
+        alertMinLength: "You must select a length of at least {min} to include all selected types."
+    }
+};
+
+langBtn.addEventListener("click", () => {
+    currentLang = currentLang === "es" ? "en" : "es";
+    langBtn.textContent = currentLang === "es" ? "EN" : "ES";
+
+    // Actualiza el atributo lang del documento HTML
+    document.documentElement.lang = currentLang;
+
+    // Recorre todos los elementos con la propiedad data-key y actualiza su texto
+    document.querySelectorAll("[data-key]").forEach(el => {
+        const key = el.getAttribute("data-key");
+        if (translations[currentLang][key]) {
+            el.textContent = translations[currentLang][key];
+        }
+    });
+});
 
 generateBtn.addEventListener("click", () => {
     const hasSimbol = document.getElementById("simbol").checked;
@@ -35,12 +80,13 @@ generateBtn.addEventListener("click", () => {
     }
 
     if (allowedChars === "") {
-        alert("Por favor, selecciona al menos un tipo de carácter.");
+        alert(translations[currentLang].alertEmpty);
         return;
     }
 
     if (length < mandatoryChars.length) {
-        alert(`Debes seleccionar una longitud de al menos ${mandatoryChars.length} para incluir todos los tipos seleccionados.`);
+        const alertMsg = translations[currentLang].alertMinLength.replace("{min}", mandatoryChars.length);
+        alert(alertMsg);
         return;
     }
 
